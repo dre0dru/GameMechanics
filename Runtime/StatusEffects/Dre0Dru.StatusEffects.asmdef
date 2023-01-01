@@ -1,7 +1,9 @@
 {
-    "name": "Dre0Dru.GameStats.Modifiers.Ordered",
-    "rootNamespace": "Dre0Dru.GameStats.Modifiers.Ordered",
-    "references": [],
+    "name": "Dre0Dru.StatusEffects",
+    "rootNamespace": "Dre0Dru.StatusEffects",
+    "references": [
+        "GUID:49b49c76ee64f6b41bf28ef951cb0e50"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

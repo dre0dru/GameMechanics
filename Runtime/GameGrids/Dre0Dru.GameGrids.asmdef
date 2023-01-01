@@ -2,7 +2,6 @@
     "name": "Dre0Dru.GameGrids",
     "rootNamespace": "Dre0Dru.GameGrids",
     "references": [
-        "GUID:ed27a03d91d1b074dbc6bc2bc16ab73a",
         "GUID:de4e6084e6d474788bb8c799d6b461ec",
         "GUID:d8b63aba1907145bea998dd612889d6b",
         "GUID:f24cf67903b27ae498b3069ecc30cc11",
