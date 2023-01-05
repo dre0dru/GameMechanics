@@ -9,7 +9,5 @@ namespace Dre0Dru.GameGrids
         public float CellSize;
 
         public Vector2Int GridSize;
-
-        public Vector3 Origin;
     }
 }

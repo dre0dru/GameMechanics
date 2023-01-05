@@ -4,8 +4,8 @@
     "references": [
         "GUID:de4e6084e6d474788bb8c799d6b461ec",
         "GUID:d8b63aba1907145bea998dd612889d6b",
-        "GUID:f24cf67903b27ae498b3069ecc30cc11",
-        "GUID:858f01292afdc66489a4648c01d9ca1e"
+        "GUID:858f01292afdc66489a4648c01d9ca1e",
+        "GUID:e0cd26848372d4e5c891c569017e11f1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,6 +14,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.arongranberg.aline",
+            "expression": "",
+            "define": "ALINE"
+        },
+        {
+            "name": "com.unity.collections",
+            "expression": "",
+            "define": "UNITY_COLLECTIONS"
+        }
+    ],
     "noEngineReferences": false
 }
