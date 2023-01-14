@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Dre0Dru.Collections;
 using UnityEngine;
 
@@ -69,6 +72,11 @@ namespace Dre0Dru.GameGrids
         {
             var halfSize = _settings.CellSize * 0.5f;
             return GridToWorld(gridPos) + new Vector3(halfSize, 0, halfSize);
+        }
+
+        public IGameGrid2D<TGridObject>.GridPositionEnumerator GetEnumerator()
+        {
+            return new IGameGrid2D<TGridObject>.GridPositionEnumerator(GridSize);
         }
     }
 }

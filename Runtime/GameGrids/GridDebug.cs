@@ -33,17 +33,12 @@ namespace Dre0Dru.GameGrids
             Quaternion rotation, float size, LabelAlignment labelAlignment,
             Color color, Func<Vector2Int, string> gridObjectToStringFunc)
         {
-            for (int i = 0; i < gameGrid2d.GridSize.x; i++)
+            foreach (var gridPos in gameGrid2d)
             {
-                for (int j = 0; j < gameGrid2d.GridSize.y; j++)
-                {
-                    var gridPos = new Vector2Int(i, j);
+                var text = gridObjectToStringFunc(gridPos);
 
-                    var text = gridObjectToStringFunc(gridPos);
-
-                    Draw.Label3D(gameGrid2d.GridToWorldCentered(gridPos),
-                        rotation, text, size, labelAlignment, color);
-                }
+                Draw.Label3D(gameGrid2d.GridToWorldCentered(gridPos),
+                    rotation, text, size, labelAlignment, color);
             }
         }
     }
