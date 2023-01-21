@@ -4,8 +4,6 @@ using UnityEngine;
 namespace Dre0Dru.GameGrids
 {
     //TODO grid plane to raycast against
-    //TODO GridReference<T> as grid object, but it also has reference to grid itself?
-    //TODO and then extensions to work with it instead of separate implementation
     public class GameGrid2D<TGridObject> : IGameGrid2D<TGridObject>
     {
         private readonly GameGridSettings _settings;
