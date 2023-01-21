@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -10,29 +11,30 @@ namespace Dre0Dru.GameGrids.Pathfinding
     public class GameGrid2DAStarPathfinding<TGridObject> : IGameGrid2DPathfinding<TGridObject>
         where TGridObject : IAStarPathfindingNode<TGridObject>
     {
+        private static readonly Comparison<GridPositionedObject<TGridObject>> Comparison = (x, y) =>
+            x.GridObject.TotalCost.CompareTo(y.GridObject.TotalCost);
+
         private readonly IGameGrid2D<TGridObject> _gameGrid2D;
-        private readonly IComparer<GridPositionedObject<TGridObject>> _comparer;
         private readonly IAStarHeuristic<TGridObject> _heuristic;
 
-        public GameGrid2DAStarPathfinding(IGameGrid2D<TGridObject> gameGrid2D, 
-            IComparer<GridPositionedObject<TGridObject>> comparer, IAStarHeuristic<TGridObject> heuristic)
+        public GameGrid2DAStarPathfinding(IGameGrid2D<TGridObject> gameGrid2D, IAStarHeuristic<TGridObject> heuristic)
         {
             _gameGrid2D = gameGrid2D;
-            _comparer = comparer;
             _heuristic = heuristic;
         }
 
         //TODO refactor, split into smaller methods
-        public bool FindPath(Vector2Int startGridPos, Vector2Int endGridPos, List<GridPositionedObject<TGridObject>> path)
+        public bool FindPath(Vector2Int startGridPos, Vector2Int endGridPos,
+            List<GridPositionedObject<TGridObject>> path)
         {
             using var pooledOpenList =
                 CollectionPool<List<GridPositionedObject<TGridObject>>, GridPositionedObject<TGridObject>>.Get(
                     out var openList);
-            
+
             using var pooledClosedSet =
                 CollectionPool<HashSet<GridPositionedObject<TGridObject>>, GridPositionedObject<TGridObject>>.Get(
                     out var closedSet);
-            
+
             using var pooledNeighbours =
                 CollectionPool<List<GridPositionedObject<TGridObject>>, GridPositionedObject<TGridObject>>.Get(
                     out var neighbours);
@@ -106,9 +108,18 @@ namespace Dre0Dru.GameGrids.Pathfinding
         private GridPositionedObject<TGridObject> GetLowestCostNode(
             List<GridPositionedObject<TGridObject>> pathfindingNodes)
         {
-            pathfindingNodes.Sort(_comparer);
+            var lowest = pathfindingNodes[0];
 
-            return pathfindingNodes[0];
+            for (int i = 1; i < pathfindingNodes.Count; i++)
+            {
+                var current = pathfindingNodes[i];
+                if (current.GridObject.TotalCost < lowest.GridObject.TotalCost)
+                {
+                    lowest = current;
+                }
+            }
+
+            return lowest;
         }
 
         private void GetNeighbours(GridPositionedObject<TGridObject> node,
@@ -142,7 +153,7 @@ namespace Dre0Dru.GameGrids.Pathfinding
             while (current.GridObject.Previous.HasGridObject())
             {
                 current = current.GridObject.Previous;
-                
+
                 path.Add(current);
             }
 
