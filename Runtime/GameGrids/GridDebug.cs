@@ -24,14 +24,14 @@ namespace Dre0Dru.GameGrids
             Quaternion rotation, float size, LabelAlignment labelAlignment, Color color)
         {
             gameGrid2d.DrawGridObjectText3d(rotation, size, labelAlignment, color,
-                gridPos => gridPos.ToString());
+                gridPosObject => gridPosObject.GridPosition.ToString());
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional("DEBUG")]
         public static void DrawGridObjectText3d<TGridObject>(this IGameGrid2D<TGridObject> gameGrid2d,
             Quaternion rotation, float size, LabelAlignment labelAlignment,
-            Color color, Func<Vector2Int, string> gridObjectToStringFunc)
+            Color color, Func<GridPositionedObject<TGridObject>, string> gridObjectToStringFunc)
         {
             foreach (var gridPos in gameGrid2d)
             {

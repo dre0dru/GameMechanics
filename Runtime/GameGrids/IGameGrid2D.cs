@@ -6,34 +6,32 @@ namespace Dre0Dru.GameGrids
 {
     //TODO spawner extensions to spawn on grid
     //TODO hexagonal grid
+    //TODO varied grid object sizes
+    //TODO XY/XZ planes
     public interface IGameGrid2D<TGridObject>
     {
-        public struct GridPositionEnumerator : IEnumerator<Vector2Int>
+        public struct GridPositionEnumerator : IEnumerator<GridPositionedObject<TGridObject>>
         {
-            private readonly Vector2Int _gridSize;
+            private readonly IGameGrid2D<TGridObject> _gameGrid;
             private int _idx;
 
-            public Vector2Int Current
+            public GridPositionedObject<TGridObject> Current
             {
                 get
                 {
-                    if (_idx == 0)
-                    {
-                        return Vector2Int.zero;
-                    }
+                    var y = _idx / _gameGrid.GridSize.y;
+                    var x = _idx - y * _gameGrid.GridSize.y;
+                    var gridPos = new Vector2Int(x, y);
 
-                    var y = _idx / _gridSize.y;
-                    var x = _idx - y * _gridSize.y;
-                    
-                    return new Vector2Int(x, y);
+                    return _gameGrid.GetGridPositionedObject(gridPos);
                 }
             }
 
             object IEnumerator.Current => Current;
             
-            public GridPositionEnumerator(Vector2Int gridSize)
+            public GridPositionEnumerator(IGameGrid2D<TGridObject> gameGrid)
             {
-                _gridSize = gridSize;
+                _gameGrid = gameGrid;
                 _idx = -1;
             }
 
@@ -41,7 +39,7 @@ namespace Dre0Dru.GameGrids
             {
                 _idx++;
 
-                return _idx < _gridSize.x * _gridSize.y;
+                return _idx < _gameGrid.GridSize.x * _gameGrid.GridSize.y;
             }
 
             public void Reset()

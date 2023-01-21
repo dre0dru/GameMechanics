@@ -18,7 +18,7 @@ namespace Dre0Dru.GameGrids
             removedObject = default;
             return false;
         }
-        
+
         public static bool TryGetGridObject<TGridObject>(this IGameGrid2D<TGridObject> gameGrid2D,
             Vector2Int gridPos, out TGridObject gridObject)
         {
@@ -35,5 +35,43 @@ namespace Dre0Dru.GameGrids
 
         public static Vector2 TotalSize<TGridObject>(this IGameGrid2D<TGridObject> gameGrid2D) =>
             new Vector2(gameGrid2D.GridSize.x, gameGrid2D.GridSize.y) * gameGrid2D.CellSize;
+
+        public static TGridObject GetOrCreateGridObject<TGridObject>(this IGameGrid2D<TGridObject> gameGrid2D,
+            Vector2Int gridPos)
+            where TGridObject : new()
+        {
+            if (!gameGrid2D.TryGetGridObject(gridPos, out var gridObject))
+            {
+                gridObject = new TGridObject();
+                gameGrid2D.SetGridObject(gridPos, gridObject);
+            }
+
+            return gridObject;
+        }
+
+        public static GridPositionedObject<TGridObject> GetGridPositionedObject<TGridObject>(
+            this IGameGrid2D<TGridObject> gameGrid2D, Vector2Int gridPos)
+        {
+            var gridObject = gameGrid2D.GetGridObject(gridPos);
+
+            return new GridPositionedObject<TGridObject>()
+            {
+                GridObject = gridObject,
+                GridPosition = gridPos
+            };
+        }
+
+        public static bool HasGridObject<TGridObject>(this GridPositionedObject<TGridObject> gridPosObject)
+        {
+            return gridPosObject.GridObject != null;
+        }
+
+        public static bool TryGetGridObject<TGridObject>(this GridPositionedObject<TGridObject> gridPosObject, 
+            out TGridObject gridObject)
+        {
+            gridObject = gridPosObject.GridObject;
+
+            return gridPosObject.HasGridObject();
+        }
     }
 }

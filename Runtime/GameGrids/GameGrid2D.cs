@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Dre0Dru.Collections;
 using UnityEngine;
 
@@ -76,7 +73,7 @@ namespace Dre0Dru.GameGrids
 
         public IGameGrid2D<TGridObject>.GridPositionEnumerator GetEnumerator()
         {
-            return new IGameGrid2D<TGridObject>.GridPositionEnumerator(GridSize);
+            return new IGameGrid2D<TGridObject>.GridPositionEnumerator(this);
         }
     }
 }
