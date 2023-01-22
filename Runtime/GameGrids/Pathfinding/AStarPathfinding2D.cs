@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Dre0Dru.GameGrids.Pathfinding
 {
-    //TODO bursted?
-    //TODO since there is no cached data here instances can be created on demand
-    //TODO or binded for diff pathfinding options
-    public class GameGrid2DAStarPathfinding<TGridObject> : IGameGrid2DPathfinding<TGridObject>
+    public class AStarPathfinding2D<TGridObject> : IGameGrid2DPathfinding<TGridObject>
         where TGridObject : IAStarPathfindingNode<TGridObject>
     {
-        private static readonly Comparison<GridPositionedObject<TGridObject>> Comparison = (x, y) =>
-            x.GridObject.TotalCost.CompareTo(y.GridObject.TotalCost);
-
         private readonly IGameGrid2D<TGridObject> _gameGrid2D;
         private readonly IAStarHeuristic<TGridObject> _heuristic;
-
-        public GameGrid2DAStarPathfinding(IGameGrid2D<TGridObject> gameGrid2D, IAStarHeuristic<TGridObject> heuristic)
+        private readonly bool _allowDiagonalMovement;
+        
+        public AStarPathfinding2D(IGameGrid2D<TGridObject> gameGrid2D, IAStarHeuristic<TGridObject> heuristic,
+            bool allowDiagonalMovement)
         {
             _gameGrid2D = gameGrid2D;
             _heuristic = heuristic;
+            _allowDiagonalMovement = allowDiagonalMovement;
         }
 
         //TODO refactor, split into smaller methods
-        public bool FindPath(Vector2Int startGridPos, Vector2Int endGridPos,
+        public bool TryFindPath(Vector2Int startGridPos, Vector2Int endGridPos,
             List<GridPositionedObject<TGridObject>> path)
         {
             using var pooledOpenList =
@@ -39,6 +35,7 @@ namespace Dre0Dru.GameGrids.Pathfinding
                 CollectionPool<List<GridPositionedObject<TGridObject>>, GridPositionedObject<TGridObject>>.Get(
                     out var neighbours);
 
+            //TODO reverse start and end here so we don't need to reverse it on final path construction
             var start = _gameGrid2D.GetGridPositionedObject(startGridPos);
             var end = _gameGrid2D.GetGridPositionedObject(endGridPos);
 
@@ -49,7 +46,7 @@ namespace Dre0Dru.GameGrids.Pathfinding
                 var node = _gameGrid2D.GetGridObject(gridPosition);
 
                 node.Cost = int.MaxValue;
-                node.Heuristic = 0;
+                node.Heuristic = CalculateHeuristic(gridPosition, end);
                 node.Previous = default;
             }
 
@@ -86,7 +83,6 @@ namespace Dre0Dru.GameGrids.Pathfinding
                         TGridObject neighbourNode = neighbour;
                         neighbourNode.Previous = current;
                         neighbourNode.Cost = cost;
-                        neighbourNode.Heuristic = CalculateHeuristic(neighbour, end);
 
                         if (!openList.Contains(neighbour))
                         {
@@ -130,10 +126,13 @@ namespace Dre0Dru.GameGrids.Pathfinding
             TryAddNeighbour(Vector2Int.right);
             TryAddNeighbour(Vector2Int.left);
 
-            TryAddNeighbour(Vector2Int.up + Vector2Int.right);
-            TryAddNeighbour(Vector2Int.down + Vector2Int.right);
-            TryAddNeighbour(Vector2Int.up + Vector2Int.left);
-            TryAddNeighbour(Vector2Int.down + Vector2Int.left);
+            if (_allowDiagonalMovement)
+            {
+                TryAddNeighbour(Vector2Int.up + Vector2Int.right);
+                TryAddNeighbour(Vector2Int.down + Vector2Int.right);
+                TryAddNeighbour(Vector2Int.up + Vector2Int.left);
+                TryAddNeighbour(Vector2Int.down + Vector2Int.left);
+            }
 
             void TryAddNeighbour(Vector2Int offset)
             {
