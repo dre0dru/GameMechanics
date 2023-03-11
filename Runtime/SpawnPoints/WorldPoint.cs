@@ -4,18 +4,25 @@ using UnityEngine;
 namespace Dre0Dru.SpawnPoints
 {
     [Serializable]
-    public struct PositionRotationSpawnData
+    public struct WorldPoint
     {
         public Vector3 Position;
         public Quaternion Rotation;
 
-        public static implicit operator PositionRotationSpawnData(Transform transform)
+        public static implicit operator WorldPoint(Transform transform)
         {
-            return new PositionRotationSpawnData()
+            return new WorldPoint()
             {
                 Position = transform.position,
                 Rotation = transform.rotation
             };
         }
+    }
+    
+    [Serializable]
+    public struct WorldPoint<TMetadata>
+    {
+        public TMetadata Metadata;
+        public WorldPoint Point;
     }
 }
