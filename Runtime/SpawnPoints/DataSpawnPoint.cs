@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Dre0Dru.SpawnPoints
 {
@@ -19,6 +18,5 @@ namespace Dre0Dru.SpawnPoints
         {
             return new DataSpawnPoint<TData>(spawnPoint.Data);
         }
-
     }
 }

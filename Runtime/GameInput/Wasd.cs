@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Dre0Dru.Prototyping.GameInput
+namespace Dre0Dru.GameInput
 {
     public static class Wasd
     {
@@ -32,7 +32,7 @@ namespace Dre0Dru.Prototyping.GameInput
                 result.x -= 1;
             }
 
-            return result.normalized;
+            return result;
             #else
             //TODO handle legacy input
             return Vector2.zero;
