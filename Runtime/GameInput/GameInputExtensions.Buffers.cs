@@ -24,6 +24,18 @@ namespace Dre0Dru.GameInput
             inputBuffer.Buffer(value, Time.time, timeOut);
         }
 
+        public static void Buffer(this TimeInputBuffer inputBuffer,
+            InputButton inputButton)
+        {
+            inputBuffer.Buffer(inputButton.PressTime);
+        }
+
+        public static void Buffer(this TimeInputBuffer inputBuffer,
+            InputButton inputButton, float timeOut)
+        {
+            inputBuffer.Buffer(inputButton.PressTime, timeOut);
+        }
+
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
             InputButton<T> inputButton)
         {

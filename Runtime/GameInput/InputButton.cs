@@ -4,6 +4,8 @@ using UnityEngine;
 namespace Dre0Dru.GameInput
 {
     //TODO wrapper around InputSystem.ButtonControl?
+    //TODO something like query builder fo input filtering? like button.WasPressedIn().NotHold() and etc.
+    //TODO rename hold and all related extensions
     [Serializable]
     public class InputButton
     {

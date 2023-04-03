@@ -14,16 +14,6 @@ namespace Dre0Dru.GameInput
             inputButton.OnHold(Time.time, Time.frameCount);
         }
 
-        public static bool WasHeldInLastSeconds(this InputButton inputButton, float time, float seconds)
-        {
-            return inputButton.LastHoldTime >= time - seconds;
-        }
-        
-        public static bool WasHeldInLastSeconds(this InputButton inputButton, float seconds)
-        {
-            return inputButton.WasHeldInLastSeconds(Time.time, seconds);
-        }
-
         public static bool WasHeldOnFrame(this InputButton inputButton, int frame)
         {
             return inputButton.LastHoldFrame == frame;
