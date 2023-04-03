@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dre0Dru.GameInput
 {
+    //TODO wrapper around InputSystem.ButtonControl?
     [Serializable]
     public class InputButton
     {

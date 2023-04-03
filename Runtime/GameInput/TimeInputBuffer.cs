@@ -26,7 +26,6 @@ namespace Dre0Dru.GameInput
 
         public void Buffer(float bufferedTime)
         {
-            _isConsumed = false;
             _bufferedTime = bufferedTime;
         }
         
@@ -44,6 +43,11 @@ namespace Dre0Dru.GameInput
         public void Consume()
         {
             _isConsumed = true;
+        }
+
+        public void Reset()
+        {
+            _isConsumed = false;
         }
     }
 

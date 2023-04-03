@@ -2,38 +2,8 @@
 
 namespace Dre0Dru.GameInput
 {
-    public static class GameInputExtensions
+    public static partial class GameInputExtensions
     {
-        public static void OnPress(this InputButton inputButton)
-        {
-            inputButton.OnPress(Time.time, Time.frameCount);
-        }
-
-        public static void OnHold(this InputButton inputButton)
-        {
-            inputButton.OnHold(Time.time, Time.frameCount);
-        }
-
-        public static bool IsPressed(this InputButton inputButton)
-        {
-            return inputButton.LastHoldFrame == Time.frameCount;
-        }
-
-        public static bool WasPressedThisFrame(this InputButton inputButton)
-        {
-            return inputButton.PressFrame == Time.frameCount;
-        }
-
-        public static bool WasPressedInLastSeconds(this InputButton inputButton, float seconds)
-        {
-            return Time.time - inputButton.PressTime <= seconds;
-        }
-
-        public static bool WasPressedInLastFrames(this InputButton inputButton, int frames)
-        {
-            return Time.frameCount - inputButton.PressFrame <= frames;
-        }
-
         public static void Buffer(this TimeInputBuffer inputBuffer)
         {
             inputBuffer.Buffer(Time.time);
@@ -54,20 +24,16 @@ namespace Dre0Dru.GameInput
             inputBuffer.Buffer(value, Time.time, timeOut);
         }
 
-        public static void BufferIfWasPressedThisFrame<T>(this TimeInputBuffer<T> inputBuffer, InputButton<T> inputButton)
+        public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
+            InputButton<T> inputButton)
         {
-            if (inputButton.WasPressedThisFrame())
-            {
-                inputBuffer.Buffer(inputButton.Value, inputButton.PressTime);
-            }
+            inputBuffer.Buffer(inputButton.Value, inputButton.PressTime);
         }
 
-        public static void BufferIfWasPressedThisFrame<T>(this TimeInputBuffer<T> inputBuffer, InputButton<T> inputButton, float timeOut)
+        public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
+            InputButton<T> inputButton, float timeOut)
         {
-            if (inputButton.WasPressedThisFrame())
-            {
-                inputBuffer.Buffer(inputButton.Value, inputButton.PressTime, timeOut);
-            }
+            inputBuffer.Buffer(inputButton.Value, inputButton.PressTime, timeOut);
         }
 
         public static bool CanBeConsumed(this TimeInputBuffer inputBuffer)
