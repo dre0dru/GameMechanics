@@ -13,9 +13,9 @@ namespace Dre0Dru.GameInput
         private float _bufferedTime = float.MinValue;
 
         [SerializeField]
-        private bool _isConsumed;
+        private float _consumeTime = float.MinValue;
 
-        public bool IsConsumed => _isConsumed;
+        public bool IsConsumed => _consumeTime >= _bufferedTime;
 
         public float ValidUntilTime => _bufferedTime + _timeOut;
 
@@ -32,7 +32,7 @@ namespace Dre0Dru.GameInput
         public void Buffer(float bufferedTime, float timeOut)
         {
             _timeOut = timeOut;
-            _bufferedTime = bufferedTime;
+            Buffer(bufferedTime);
         }
 
         public bool CanBeConsumed(float time)
@@ -40,14 +40,9 @@ namespace Dre0Dru.GameInput
             return !IsConsumed && time <= ValidUntilTime;
         }
 
-        public void Consume()
+        public void Consume(float time)
         {
-            _isConsumed = true;
-        }
-
-        public void Reset()
-        {
-            _isConsumed = false;
+            _consumeTime = time;
         }
     }
 

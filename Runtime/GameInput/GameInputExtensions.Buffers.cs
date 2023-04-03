@@ -41,6 +41,11 @@ namespace Dre0Dru.GameInput
             return inputBuffer.CanBeConsumed(Time.time);
         }
 
+        public static void Consume(this TimeInputBuffer inputBuffer)
+        {
+            inputBuffer.Consume(Time.time);
+        }
+
         public static bool TryToConsume(this TimeInputBuffer inputBuffer)
         {
             return inputBuffer.TryToConsume(Time.time);
@@ -50,7 +55,7 @@ namespace Dre0Dru.GameInput
         {
             if (inputBuffer.CanBeConsumed(time))
             {
-                inputBuffer.Consume();
+                inputBuffer.Consume(time);
                 return true;
             }
 
@@ -66,7 +71,7 @@ namespace Dre0Dru.GameInput
         {
             if (inputBuffer.CanBeConsumed(time))
             {
-                inputBuffer.Consume();
+                inputBuffer.Consume(time);
                 value = inputBuffer.Value;
                 return true;
             }
