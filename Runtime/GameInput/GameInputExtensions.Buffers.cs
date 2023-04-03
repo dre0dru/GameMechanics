@@ -4,12 +4,12 @@ namespace Dre0Dru.GameInput
 {
     public static partial class GameInputExtensions
     {
-        public static void Buffer(this TimeInputBuffer inputBuffer)
+        public static void Buffer(this TimeBuffer inputBuffer)
         {
             inputBuffer.Buffer(Time.time);
         }
 
-        public static void Buffer(this TimeInputBuffer inputBuffer, float timeOut)
+        public static void Buffer(this TimeBuffer inputBuffer, float timeOut)
         {
             inputBuffer.Buffer(Time.time, timeOut);
         }
@@ -24,46 +24,46 @@ namespace Dre0Dru.GameInput
             inputBuffer.Buffer(value, Time.time, timeOut);
         }
 
-        public static void Buffer(this TimeInputBuffer inputBuffer,
-            InputButton inputButton)
+        public static void Buffer(this TimeBuffer inputBuffer,
+            Button inputButton)
         {
             inputBuffer.Buffer(inputButton.PressTime);
         }
 
-        public static void Buffer(this TimeInputBuffer inputBuffer,
-            InputButton inputButton, float timeOut)
+        public static void Buffer(this TimeBuffer inputBuffer,
+            Button inputButton, float timeOut)
         {
             inputBuffer.Buffer(inputButton.PressTime, timeOut);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
-            InputButton<T> inputButton)
+            Button<T> inputButton)
         {
             inputBuffer.Buffer(inputButton.Value, inputButton.PressTime);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
-            InputButton<T> inputButton, float timeOut)
+            Button<T> inputButton, float timeOut)
         {
             inputBuffer.Buffer(inputButton.Value, inputButton.PressTime, timeOut);
         }
 
-        public static bool CanBeConsumed(this TimeInputBuffer inputBuffer)
+        public static bool CanBeConsumed(this TimeBuffer inputBuffer)
         {
             return inputBuffer.CanBeConsumed(Time.time);
         }
 
-        public static void Consume(this TimeInputBuffer inputBuffer)
+        public static void Consume(this TimeBuffer inputBuffer)
         {
             inputBuffer.Consume(Time.time);
         }
 
-        public static bool TryToConsume(this TimeInputBuffer inputBuffer)
+        public static bool TryToConsume(this TimeBuffer inputBuffer)
         {
             return inputBuffer.TryToConsume(Time.time);
         }
 
-        public static bool TryToConsume(this TimeInputBuffer inputBuffer, float time)
+        public static bool TryToConsume(this TimeBuffer inputBuffer, float time)
         {
             if (inputBuffer.CanBeConsumed(time))
             {

@@ -5,10 +5,11 @@ namespace Dre0Dru.GameInput
 {
     //TODO wrapper around InputSystem.ButtonControl?
     //TODO something like query builder fo input filtering? like button.WasPressedIn().NotHold() and etc.
-    //TODO rename hold and all related extensions
+    //TODO or just some decorator with lambda delegate to filter the input
     [Serializable]
-    public class InputButton
+    public class Button
     {
+        //TODO all fields as ButtonState
         [SerializeField]
         private float _pressTime = float.MinValue;
         
@@ -47,7 +48,7 @@ namespace Dre0Dru.GameInput
     }
     
     [Serializable]
-    public class InputButton<T> : InputButton
+    public class Button<T> : Button
     {
         [SerializeField]
         private T _value;
@@ -58,7 +59,7 @@ namespace Dre0Dru.GameInput
             set => _value = value;
         }
 
-        public static implicit operator T(InputButton<T> inputButton)
+        public static implicit operator T(Button<T> inputButton)
         {
             return inputButton.Value;
         }

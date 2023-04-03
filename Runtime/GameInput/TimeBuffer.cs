@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Dre0Dru.GameInput
 {
     [Serializable]
-    public class TimeInputBuffer
+    public class TimeBuffer
     {
         [SerializeField]
         private float _timeOut;
@@ -19,7 +19,7 @@ namespace Dre0Dru.GameInput
 
         public float ValidUntilTime => _bufferedTime + _timeOut;
 
-        public TimeInputBuffer(float timeOut)
+        public TimeBuffer(float timeOut)
         {
             _timeOut = timeOut;
         }
@@ -47,7 +47,7 @@ namespace Dre0Dru.GameInput
     }
 
     [Serializable]
-    public class TimeInputBuffer<T> : TimeInputBuffer
+    public class TimeInputBuffer<T> : TimeBuffer
     {
         [SerializeField]
         private T _value;
