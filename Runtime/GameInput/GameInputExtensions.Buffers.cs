@@ -6,61 +6,61 @@ namespace Dre0Dru.GameInput
     {
         public static void Buffer(this TimeBuffer inputBuffer)
         {
-            inputBuffer.Buffer(Time.time);
+            inputBuffer.Buffer(Time.realtimeSinceStartup);
         }
 
         public static void Buffer(this TimeBuffer inputBuffer, float timeOut)
         {
-            inputBuffer.Buffer(Time.time, timeOut);
+            inputBuffer.Buffer(Time.realtimeSinceStartup, timeOut);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer, T value)
         {
-            inputBuffer.Buffer(value, Time.time);
+            inputBuffer.Buffer(value, Time.realtimeSinceStartup);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer, T value, float timeOut)
         {
-            inputBuffer.Buffer(value, Time.time, timeOut);
+            inputBuffer.Buffer(value, Time.realtimeSinceStartup, timeOut);
         }
 
         public static void Buffer(this TimeBuffer inputBuffer,
-            Button inputButton)
+            ButtonState buttonState)
         {
-            inputBuffer.Buffer(inputButton.PressTime);
+            inputBuffer.Buffer(buttonState.PressTime);
         }
 
         public static void Buffer(this TimeBuffer inputBuffer,
-            Button inputButton, float timeOut)
+            ButtonState buttonState, float timeOut)
         {
-            inputBuffer.Buffer(inputButton.PressTime, timeOut);
+            inputBuffer.Buffer(buttonState.PressTime, timeOut);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
-            Button<T> inputButton)
+            ButtonState<T> buttonState)
         {
-            inputBuffer.Buffer(inputButton.Value, inputButton.PressTime);
+            inputBuffer.Buffer(buttonState.Value, buttonState.PressTime);
         }
 
         public static void Buffer<T>(this TimeInputBuffer<T> inputBuffer,
-            Button<T> inputButton, float timeOut)
+            ButtonState<T> buttonState, float timeOut)
         {
-            inputBuffer.Buffer(inputButton.Value, inputButton.PressTime, timeOut);
+            inputBuffer.Buffer(buttonState.Value, buttonState.PressTime, timeOut);
         }
 
         public static bool CanBeConsumed(this TimeBuffer inputBuffer)
         {
-            return inputBuffer.CanBeConsumed(Time.time);
+            return inputBuffer.CanBeConsumed(Time.realtimeSinceStartup);
         }
 
         public static void Consume(this TimeBuffer inputBuffer)
         {
-            inputBuffer.Consume(Time.time);
+            inputBuffer.Consume(Time.realtimeSinceStartup);
         }
 
         public static bool TryToConsume(this TimeBuffer inputBuffer)
         {
-            return inputBuffer.TryToConsume(Time.time);
+            return inputBuffer.TryToConsume(Time.realtimeSinceStartup);
         }
 
         public static bool TryToConsume(this TimeBuffer inputBuffer, float time)
@@ -76,7 +76,7 @@ namespace Dre0Dru.GameInput
 
         public static bool TryToConsume<T>(this TimeInputBuffer<T> inputBuffer, out T value)
         {
-            return inputBuffer.TryToConsume(Time.time, out value);
+            return inputBuffer.TryToConsume(Time.realtimeSinceStartup, out value);
         }
 
         public static bool TryToConsume<T>(this TimeInputBuffer<T> inputBuffer, float time, out T value)

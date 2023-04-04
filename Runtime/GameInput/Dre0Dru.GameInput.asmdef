@@ -10,7 +10,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "INPUT_SYSTEM"
+    ],
     "versionDefines": [
         {
             "name": "com.unity.inputsystem",
