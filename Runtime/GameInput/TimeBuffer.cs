@@ -47,14 +47,14 @@ namespace Dre0Dru.GameInput
     }
 
     [Serializable]
-    public class TimeInputBuffer<T> : TimeBuffer
+    public class TimeBuffer<T> : TimeBuffer
     {
         [SerializeField]
         private T _value;
 
         public T Value => _value;
 
-        public TimeInputBuffer(T value, float timeOut) : base(timeOut)
+        public TimeBuffer(T value, float timeOut) : base(timeOut)
         {
             _value = value;
         }
@@ -71,7 +71,7 @@ namespace Dre0Dru.GameInput
             Buffer(bufferedTime, timeOut);
         }
 
-        public static implicit operator T(TimeInputBuffer<T> inputBuffer)
+        public static implicit operator T(TimeBuffer<T> inputBuffer)
         {
             return inputBuffer.Value;
         }
