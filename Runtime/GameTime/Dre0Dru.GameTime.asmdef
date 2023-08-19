@@ -1,6 +1,6 @@
 {
-    "name": "Dre0Dru.GamePause",
-    "rootNamespace": "Dre0Dru.GamePause",
+    "name": "Dre0Dru.GameTime",
+    "rootNamespace": "Dre0Dru.GameTime",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
