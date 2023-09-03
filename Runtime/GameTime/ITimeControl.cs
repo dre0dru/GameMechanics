@@ -1,8 +1,14 @@
 ﻿namespace Dre0Dru.GameTime
 {
-    public interface ITimeControl
+    public interface IGameTime
     {
         float DeltaTime { get; }
-        float TimeScale { get; set; }
+        float DeltaTimeUnscaled { get; }
+        float TimeScale { get; }
+    }
+    
+    public interface ITimeControl : IGameTime
+    {
+        void SetTimeScale(float timeScale);
     }
 }

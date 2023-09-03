@@ -1,0 +1,14 @@
+{
+    "name": "Dre0Dru.Projectiles.Patterns",
+    "rootNamespace": "Dre0Dru.Projectiles.Patterns",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

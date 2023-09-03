@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dre0Dru.GameTime
 {
+    //TODO tokens with values linked to specific time control? for polling
     [Serializable]
     public class LocalTimeControl : ITimeControl
     {
@@ -10,11 +11,13 @@ namespace Dre0Dru.GameTime
         private float _timeScale = 1;
 
         public float DeltaTime => Time.deltaTime * TimeScale;
+        public float DeltaTimeUnscaled => Time.deltaTime;
 
-        public float TimeScale
+        public float TimeScale => _timeScale;
+
+        public void SetTimeScale(float timeScale)
         {
-            get => _timeScale;
-            set => _timeScale = value;
+            _timeScale = timeScale;
         }
     }
 }

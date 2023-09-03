@@ -8,11 +8,12 @@ namespace Dre0Dru.GameTime
         private LocalTimeControl _localTimeControl;
 
         public float DeltaTime => _localTimeControl.DeltaTime;
+        public float DeltaTimeUnscaled => _localTimeControl.DeltaTimeUnscaled;
+        public float TimeScale => _localTimeControl.TimeScale;
 
-        public float TimeScale
+        public void SetTimeScale(float timeScale)
         {
-            get => _localTimeControl.TimeScale;
-            set => _localTimeControl.TimeScale = value;
+            _localTimeControl.SetTimeScale(timeScale);
         }
     }
 }
