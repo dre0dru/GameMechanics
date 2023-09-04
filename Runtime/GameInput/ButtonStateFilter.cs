@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 
 namespace Dre0Dru.GameInput
 {
+    //TODO hold, press, tap filters
     public abstract class ButtonStateFilter
     {
         private readonly ButtonState _button;
