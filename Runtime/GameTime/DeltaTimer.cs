@@ -12,8 +12,8 @@ namespace Dre0Dru.GameTime
         public float Time => _time;
 
         public bool HasFinished => _time <= 0;
-        
-        public DeltaTimer(float targetTime = 0.0f)
+
+        public DeltaTimer(float targetTime = default)
         {
             Reset(targetTime);
         }
