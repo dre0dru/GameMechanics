@@ -4,10 +4,7 @@
     {
         int Count { get; }
         float Delay { get; }
-    }
 
-    public interface IShapePattern<out TOutput> : IShapePattern
-    {
-        TOutput CalculateOutput(int index);
+        PatternOutput CalculateOutput(int index);
     }
 }

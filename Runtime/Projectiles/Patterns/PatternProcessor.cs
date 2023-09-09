@@ -6,8 +6,8 @@ namespace Dre0Dru.Projectiles.Patterns
 {
     //TODO composite processor
     [Serializable]
-    public class PatternProcessor<TPattern, TOutput>
-        where TPattern : IShapePattern<TOutput>
+    public class PatternProcessor<TPattern>
+        where TPattern : IShapePattern
     {
         [SerializeField]
         private TPattern _pattern;
@@ -30,7 +30,7 @@ namespace Dre0Dru.Projectiles.Patterns
 
         public bool HasFinished => _currentIndex >= _pattern.Count;
 
-        public bool Process(float dt, out int index, out TOutput output)
+        public bool Process(float dt, out int index, out PatternOutput output)
         {
             index = default;
             output = default;
@@ -50,5 +50,9 @@ namespace Dre0Dru.Projectiles.Patterns
 
             return false;
         }
+    }
+
+    public class PatternProcessor : PatternProcessor<IShapePattern>
+    {
     }
 }

@@ -2,7 +2,8 @@
     "name": "Dre0Dru.Projectiles.Patterns",
     "rootNamespace": "Dre0Dru.Projectiles.Patterns",
     "references": [
-        "GUID:df1d7f25428ae304989d9f3a2b16f817"
+        "GUID:df1d7f25428ae304989d9f3a2b16f817",
+        "GUID:6bdba2b7946868a45afc24a5b48518ba"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
