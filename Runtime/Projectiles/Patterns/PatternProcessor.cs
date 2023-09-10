@@ -52,6 +52,7 @@ namespace Dre0Dru.Projectiles.Patterns
         }
     }
 
+    [Serializable]
     public class PatternProcessor : PatternProcessor<IShapePattern>
     {
     }
