@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dre0Dru.GameInput
 {
+    //TODO replace with consumable pressed in last X seconds state filter?
     [Serializable]
     public class InputTimeBuffer
     {
