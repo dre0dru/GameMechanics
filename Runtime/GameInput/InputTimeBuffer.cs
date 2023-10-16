@@ -63,6 +63,10 @@ namespace Dre0Dru.GameInput
         {
         }
         
+        public InputTimeBuffer(float timeout) : this(default, timeout)
+        {
+        }
+        
         public InputTimeBuffer(T value) : this(value, default)
         {
         }
