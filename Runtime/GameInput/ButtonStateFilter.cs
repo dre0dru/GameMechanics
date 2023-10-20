@@ -2,8 +2,12 @@ using System;
 
 namespace Dre0Dru.GameInput
 {
-    //TODO hold, press, tap filters
-    public abstract class ButtonStateFilter
+    public interface IButtonStateFilter
+    {
+        bool IsValid { get; }
+    }
+
+    public abstract class ButtonStateFilter : IButtonStateFilter
     {
         private readonly ButtonState _button;
 
@@ -22,7 +26,7 @@ namespace Dre0Dru.GameInput
         }
     }
 
-    public abstract class ButtonStateFilter<T>
+    public abstract class ButtonStateFilter<T> : IButtonStateFilter
     {
         private readonly ButtonState<T> _button;
 
@@ -63,5 +67,38 @@ namespace Dre0Dru.GameInput
         }
 
         public override bool IsValid => _filterFunc(Button);
+    }
+
+    public class ButtonStateHoldFilter : ButtonStateFilter
+    {
+        private readonly float _holdDurationSeconds;
+
+        public ButtonStateHoldFilter(ButtonState button, float holdDurationSeconds) : base(button)
+        {
+            _holdDurationSeconds = holdDurationSeconds;
+        }
+
+        public override bool IsValid => Button.WasHeldFor(_holdDurationSeconds);
+    }
+
+    public class ButtonStateTapFilter : ButtonStateFilter
+    {
+        private readonly float _tapDurationSeconds;
+
+        public ButtonStateTapFilter(ButtonState button, float tapDurationSeconds) : base(button)
+        {
+            _tapDurationSeconds = tapDurationSeconds;
+        }
+
+        public override bool IsValid => Button.WasTapped(_tapDurationSeconds);
+    }
+
+    public class ButtonStatePressFilter : ButtonStateFilter
+    {
+        public ButtonStatePressFilter(ButtonState button) : base(button)
+        {
+        }
+
+        public override bool IsValid => Button.IsPressed();
     }
 }

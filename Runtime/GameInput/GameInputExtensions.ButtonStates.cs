@@ -37,9 +37,14 @@ namespace Dre0Dru.GameInput
             return buttonState.ReleaseTime - buttonState.PressTime;
         }
 
+        public static bool WasHeldFor(this ButtonState buttonState, float seconds)
+        {
+            return buttonState.HoldTime() >= seconds;
+        }
+
         public static bool WasTapped(this ButtonState buttonState, float tapDurationSeconds)
         {
-            return !buttonState.IsPressed() && buttonState.HoldTime() <= tapDurationSeconds &&
+            return !buttonState.IsPressed() && !buttonState.WasHeldFor(tapDurationSeconds) &&
                    buttonState.WasPressedInLast(tapDurationSeconds);
         }
 
