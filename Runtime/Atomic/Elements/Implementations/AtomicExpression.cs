@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Elements;
 
-namespace GameEngine
+namespace Atomic.Elements
 {
     [Serializable]
     public abstract class AtomicExpression<T> : IAtomicExpression<T>
