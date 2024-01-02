@@ -15,9 +15,9 @@ namespace Atomics.Extensions
             return new AtomicVariable<T>(it);
         }
 
-        public static AtomicFunction<R> AsFunction<T, R>(this T it, Func<T, R> func)
+        public static AtomicFunction<TResult> AsFunction<T, TResult>(this T it, Func<T, TResult> func)
         {
-            return new AtomicFunction<R>(() => func.Invoke(it));
+            return new AtomicFunction<TResult>(() => func.Invoke(it));
         }
     }
 }

@@ -29,29 +29,34 @@ namespace Atomic.Elements
         {
             return _func != null ? _func.Invoke() : default;
         }
+
+        public static implicit operator T(AtomicFunction<T> atomic)
+        {
+            return atomic.Value;
+        }
     }
 
     [Serializable]
-    public sealed class AtomicFunction<T, TR> : IAtomicFunction<T, TR>
+    public sealed class AtomicFunction<T, TResult> : IAtomicFunction<T, TResult>
     {
-        private Func<T, TR> _func;
+        private Func<T, TResult> _func;
 
         public AtomicFunction()
         {
         }
 
-        public AtomicFunction(Func<T, TR> func)
+        public AtomicFunction(Func<T, TResult> func)
         {
             _func = func;
         }
 
-        public void Compose(Func<T, TR> func)
+        public void Compose(Func<T, TResult> func)
         {
             _func = func;
         }
 
         [Button]
-        public TR Invoke(T args)
+        public TResult Invoke(T args)
         {
             return _func.Invoke(args);
         }

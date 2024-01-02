@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Atomic.Objects
 {
+    //TODO Get should throw in value not found
     [AddComponentMenu("Atomic/Atomic Object")]
     public class AtomicObjectBase : MonoBehaviour, IAtomicObject
     {
@@ -19,7 +20,8 @@ namespace Atomic.Objects
             return Types.Contains(type);
         }
 
-        public T Get<T>(string key) where T : class
+        public T Get<T>(string key)
+            where T : class
         {
             if (References.TryGetValue(key, out var value))
             {
@@ -29,7 +31,8 @@ namespace Atomic.Objects
             return default;
         }
 
-        public bool TryGet<T>(string key, out T result) where T : class
+        public bool TryGet<T>(string key, out T result)
+            where T : class
         {
             if (References.TryGetValue(key, out var value))
             {

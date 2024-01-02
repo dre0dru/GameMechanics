@@ -9,10 +9,10 @@ namespace Atomic.Elements
     {
         private Action<T> _onChanged;
 
-        [OnValueChanged("OnValueChanged")]
+        [OnValueChanged(nameof(OnValueChanged))]
         [SerializeField]
         private T _value;
-        
+
         public T Value
         {
             get => _value;
@@ -46,6 +46,11 @@ namespace Atomic.Elements
         private void OnValueChanged(T value)
         {
             _onChanged?.Invoke(value);
+        }
+
+        public static implicit operator T(AtomicVariable<T> atomic)
+        {
+            return atomic.Value;
         }
     }
 }

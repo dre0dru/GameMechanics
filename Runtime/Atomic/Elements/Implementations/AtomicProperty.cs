@@ -1,14 +1,16 @@
 using System;
+using Sirenix.OdinInspector;
 
 namespace Atomic.Elements
 {
     [Serializable]
     public sealed class AtomicProperty<T> : IAtomicVariable<T>
     {
+        [ShowInInspector, DisableInEditorMode]
         public T Value
         {
-            get => _getter.Invoke();
-            set => _setter.Invoke(value);
+            get => _getter != null ? _getter.Invoke() : default;
+            set => _setter?.Invoke(value);
         }
 
         private Func<T> _getter;
@@ -28,6 +30,11 @@ namespace Atomic.Elements
         {
             _getter = getter;
             _setter = setter;
+        }
+
+        public static implicit operator T(AtomicProperty<T> atomic)
+        {
+            return atomic.Value;
         }
     }
 }

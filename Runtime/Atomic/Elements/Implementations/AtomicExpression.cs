@@ -19,7 +19,12 @@ namespace Atomic.Elements
             Members.Remove(member);
             return this;
         }
-        
+
         public abstract T Invoke();
+
+        public static implicit operator T(AtomicExpression<T> atomic)
+        {
+            return atomic.Invoke();
+        }
     }
 }

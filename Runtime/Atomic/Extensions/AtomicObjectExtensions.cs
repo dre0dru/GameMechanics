@@ -3,6 +3,7 @@ using Atomic.Objects;
 
 namespace Atomics.Extensions
 {
+    //TODO TryGet variants
     public static class AtomicObjectExtensions
     {
         public static IAtomicValue<T> GetValue<T>(this IAtomicObject it, string name)
