@@ -37,7 +37,7 @@ namespace Atomic.Objects
                 references.AddRange(AtomicScanner.ScanReferences(@interface));
             }
 
-            while (objectType != typeof(AtomicObject))
+            while (objectType != typeof(AtomicObjectComponent))
             {
                 types.UnionWith(AtomicScanner.ScanTypes(objectType));
                 references.AddRange(AtomicScanner.ScanReferences(objectType));

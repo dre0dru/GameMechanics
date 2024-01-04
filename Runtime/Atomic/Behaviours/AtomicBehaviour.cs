@@ -4,12 +4,12 @@ using Sirenix.OdinInspector;
 
 namespace Atomic.Behaviours
 {
-    public class AtomicBehaviour : AtomicObject
+    public class AtomicBehaviour : AtomicObjectComponent
     {
         [Title("Logic"), PropertySpace, PropertyOrder(150)]
         [ShowInInspector, HideInEditorMode]
         private HashSet<ILogic> _logicSet;
-        
+
         [ShowInInspector, HideInEditorMode, PropertyOrder(150)]
         private Dictionary<string, ILogic> _logicMap;
 

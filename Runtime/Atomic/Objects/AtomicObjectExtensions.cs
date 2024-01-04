@@ -5,7 +5,7 @@ namespace Atomic.Objects
 {
     public static class AtomicObjectExtensions
     {
-        public static void AddComponent(this AtomicObjectBase it, object component, bool @override = true)
+        public static void AddComponent(this AtomicObject it, object component, bool @override = true)
         {
             Type componentType = component.GetType();
 
@@ -42,17 +42,17 @@ namespace Atomic.Objects
             }
         }
 
-        public static void RemoveComponent(this AtomicObjectBase it, object component)
+        public static void RemoveComponent(this AtomicObject it, object component)
         {
             it.RemoveComponent(component.GetType());
         }
 
-        public static void RemoveComponent<T>(this AtomicObjectBase it)
+        public static void RemoveComponent<T>(this AtomicObject it)
         {
             it.RemoveComponent(typeof(T));
         }
 
-        public static void RemoveComponent(this AtomicObjectBase it, Type componentType)
+        public static void RemoveComponent(this AtomicObject it, Type componentType)
         {
             IEnumerable<string> types = AtomicScanner.ScanTypes(componentType);
             it.RemoveTypes(types);
@@ -64,7 +64,7 @@ namespace Atomic.Objects
             }
         }
 
-        public static void CopyDataFrom(this AtomicObjectBase it, IAtomicObject other, bool @override = true)
+        public static void CopyDataFrom(this AtomicObject it, IAtomicObject other, bool @override = true)
         {
             if (@override)
             {
@@ -82,9 +82,47 @@ namespace Atomic.Objects
             }
         }
 
-        public static void CopyTypesFrom(this AtomicObjectBase it, IAtomicObject other)
+        public static void CopyTypesFrom(this AtomicObject it, IAtomicObject other)
         {
             it.AddTypes(other.GetTypes());
+        }
+
+        public static void Compose(this AtomicObject atomicObject, object source)
+        {
+            AtomicObjectInfo objectInfo = AtomicCompiler.CompileObject(source.GetType());
+
+            atomicObject.AddTypes(objectInfo.Types);
+            atomicObject.AddReferences(source, objectInfo.References);
+            atomicObject.AddSections(source, objectInfo.Sections);
+        }
+
+        private static void AddReferences(this AtomicObject atomicObject, object source, IEnumerable<ReferenceInfo> definitions)
+        {
+            foreach (ReferenceInfo definition in definitions)
+            {
+                string id = definition.Id;
+                object value = definition.Value(source);
+
+                if (definition.Override)
+                {
+                    atomicObject.References[id] = value;
+                    continue;
+                }
+
+                atomicObject.References.TryAdd(id, value);
+            }
+        }
+
+        private static void AddSections(this AtomicObject atomicObject, object parent, IEnumerable<SectionInfo> definitions)
+        {
+            foreach (var definition in definitions)
+            {
+                object section = definition.GetValue(parent);
+
+                atomicObject.AddTypes(definition.Types);
+                atomicObject.AddReferences(section, definition.References);
+                atomicObject.AddSections(section, definition.Children);
+            }
         }
     }
 }

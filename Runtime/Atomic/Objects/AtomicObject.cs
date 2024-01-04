@@ -1,68 +1,105 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Profiling;
+using Sirenix.OdinInspector;
 
 namespace Atomic.Objects
 {
-    public abstract class AtomicObject : AtomicObjectBase
+    [Serializable]
+    public class AtomicObject : IAtomicObject
     {
-        /// <summary>
-        ///     <para>Constructor for atomic object</para>
-        /// </summary>
-        public virtual void Compose()
+        [Title("Data"), PropertySpace, PropertyOrder(100)]
+        [ShowInInspector]
+        protected internal ISet<string> Types = new HashSet<string>();
+
+        [ShowInInspector, PropertyOrder(100)]
+        protected internal IDictionary<string, object> References = new Dictionary<string, object>();
+
+        public bool Is(string type)
         {
-#if UNITY_EDITOR
-            Profiler.BeginSample("AtomicObject.Compose", this);
-#endif
-            AtomicObjectInfo objectInfo = AtomicCompiler.CompileObject(GetType());
-            
-            AddTypes(objectInfo.Types);
-            AddReferences(this, objectInfo.References);
-            AddSections(this, objectInfo.Sections);
-            
-#if UNITY_EDITOR
-            Profiler.EndSample();
-#endif
+            return Types.Contains(type);
         }
 
-        private void AddReferences(object source, IEnumerable<ReferenceInfo> definitions)
+        public T Get<T>(string key)
+            where T : class
         {
-            foreach (ReferenceInfo definition in definitions)
-            {
-                string id = definition.Id;
-                object value = definition.Value(source);
-                
-                if (definition.Override)
-                {
-                    References[id] = value;
-                    continue;
-                }
+            return Get(key) as T;
+        }
 
-                References.TryAdd(id, value);
-            }
-        }
-        
-        private void AddSections(object parent, IEnumerable<SectionInfo> definitions)
+        public bool TryGet<T>(string key, out T result)
+            where T : class
         {
-            foreach (var definition in definitions)
+            if (TryGet(key, out var value))
             {
-                object section = definition.GetValue(parent);
-                
-                AddTypes(definition.Types);
-                AddReferences(section, definition.References);
-                AddSections(section, definition.Children);
+                result = value as T;
+                return true;
+            }
+
+            result = default;
+            return false;
+        }
+
+        public object Get(string key)
+        {
+            return References[key];
+        }
+
+        public bool TryGet(string key, out object result)
+        {
+            return References.TryGetValue(key, out result);
+        }
+
+        public IEnumerable<string> GetTypes()
+        {
+            return Types;
+        }
+
+        public IEnumerable<KeyValuePair<string, object>> GetAll()
+        {
+            return References;
+        }
+
+        public bool AddData(string key, object value)
+        {
+            return References.TryAdd(key, value);
+        }
+
+        public void SetData(string key, object value)
+        {
+            References[key] = value;
+        }
+
+        public bool RemoveData(string key)
+        {
+            return References.Remove(key);
+        }
+
+        public void OverrideData(string key, object value, out object prevValue)
+        {
+            References.TryGetValue(key, out prevValue);
+            References[key] = value;
+        }
+
+        public bool AddType(string type)
+        {
+            return Types.Add(type);
+        }
+
+        public void AddTypes(IEnumerable<string> types)
+        {
+            Types.UnionWith(types);
+        }
+
+        public bool RemoveType(string type)
+        {
+            return Types.Remove(type);
+        }
+
+        public void RemoveTypes(IEnumerable<string> types)
+        {
+            foreach (var type in types)
+            {
+                Types.Remove(type);
             }
         }
-        
-#if UNITY_EDITOR
-        [ContextMenu(nameof(Compose))]
-        public void ComposeEditor()
-        {
-            Types.Clear();
-            References.Clear();
-            
-            Compose();
-        }
-#endif
     }
 }
