@@ -77,16 +77,6 @@ namespace Atomics.Extensions
             return it.TryGet<IAtomicAction<T>>(name, out action);
         }
 
-        public static void InvokeAction(this IAtomicObject it, string name)
-        {
-            it.GetAction(name)?.Invoke();
-        }
-
-        public static void InvokeAction<T>(this IAtomicObject it, string name, T args)
-        {
-            it.GetAction<T>(name)?.Invoke(args);
-        }
-
         public static IAtomicObservable<T> GetObservable<T>(this IAtomicObject it, string name)
         {
             return it.Get<IAtomicObservable<T>>(name);
