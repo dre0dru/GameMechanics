@@ -27,6 +27,11 @@ namespace Dre0Dru.GameInput
             return buttonState.PressFrame == Time.frameCount;
         }
 
+        public static bool WasReleasedThisFrame(this ButtonState buttonState)
+        {
+            return buttonState.ReleaseFrame == Time.frameCount;
+        }
+
         public static float HoldTime(this ButtonState buttonState)
         {
             if (buttonState.IsPressed())
