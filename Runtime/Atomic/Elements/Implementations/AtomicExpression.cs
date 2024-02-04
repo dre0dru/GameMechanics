@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
 namespace Atomic.Elements
 {
     [Serializable]
     public abstract class AtomicExpression<T> : IAtomicExpression<T>
     {
+        [ShowInInspector]
         protected readonly List<IAtomicValue<T>> Members = new();
 
         public IAtomicExpression<T> AddMember(IAtomicValue<T> member)

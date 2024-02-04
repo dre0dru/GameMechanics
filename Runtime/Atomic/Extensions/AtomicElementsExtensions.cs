@@ -19,5 +19,10 @@ namespace Atomics.Extensions
         {
             return new AtomicFunction<TResult>(() => func.Invoke(it));
         }
+
+        public static IAtomicValue<bool> Negate(this IAtomicValue<bool> boolValue)
+        {
+            return boolValue.AsFunction(value => !value.Value);
+        }
     }
 }

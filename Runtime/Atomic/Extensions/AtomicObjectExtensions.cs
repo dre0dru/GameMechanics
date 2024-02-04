@@ -96,5 +96,15 @@ namespace Atomics.Extensions
         {
             return it.TryGet<IAtomicObservable>(name, out observable);
         }
+
+        public static IAtomicExpression<T> GetExpression<T>(this IAtomicObject it, string name)
+        {
+            return it.Get<IAtomicExpression<T>>(name);
+        }
+
+        public static bool TryGetExpression<T>(this IAtomicObject it, string name, out IAtomicExpression<T> expression)
+        {
+            return it.TryGet<IAtomicExpression<T>>(name, out expression);
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace Atomic.Objects
 {
+    //TODO as generic with arbitrary TKey?
     public interface IAtomicObject
     {
         T Get<T>(string key) where T : class;
@@ -9,7 +10,7 @@ namespace Atomic.Objects
         object Get(string key);
         bool TryGet(string key, out object result);
         IEnumerable<KeyValuePair<string, object>> GetAll();
-        
+
         bool Is(string type);
         IEnumerable<string> GetTypes();
     }

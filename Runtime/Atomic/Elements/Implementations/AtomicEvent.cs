@@ -46,9 +46,9 @@ namespace Atomic.Elements
         }
 
         [Button]
-        public virtual void Invoke(T direction)
+        public virtual void Invoke(T arg)
         {
-            _onEvent?.Invoke(direction);
+            _onEvent?.Invoke(arg);
         }
 
         public void Dispose()
