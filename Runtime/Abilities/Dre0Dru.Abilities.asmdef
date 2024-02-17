@@ -1,0 +1,19 @@
+{
+    "name": "Dre0Dru.Abilities",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b5f9a495fd890eb4795fa4a4b3dc6cba",
+        "GUID:1925986e9c7e454191aa2aba6a296b57"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ODIN_INSPECTOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
