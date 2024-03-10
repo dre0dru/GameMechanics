@@ -46,6 +46,17 @@ namespace Dre0Dru.GameInput
 
         public float ValidUntilTime => _inputTimeBuffer.ValidUntilTime;
 
+        public BufferedButtonState() : this(default)
+        {
+            
+        }
+        
+        public BufferedButtonState(float timeout)
+        {
+            _buttonState = new ButtonState();
+            _inputTimeBuffer = new InputTimeBuffer(timeout);
+        }
+        
         public void Buffer(float bufferedTime)
         {
             _inputTimeBuffer.Buffer(bufferedTime);
