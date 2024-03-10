@@ -3,9 +3,22 @@ using UnityEngine;
 
 namespace Dre0Dru.GameInput
 {
+    public interface IButtonState
+    {
+        float PressTime { get; set; }
+        int PressFrame { get; set; }
+        float ReleaseTime { get; set; }
+        int ReleaseFrame { get; set; }
+    }
+
+    public interface IButtonState<T> : IButtonState
+    {
+        T Value { get; set; }
+    }
+    
     //TODO state that can hold previous N states?
     [Serializable]
-    public class ButtonState
+    public class ButtonState : IButtonState
     {
         [SerializeField]
         private float _pressTime = float.MinValue;
@@ -45,7 +58,7 @@ namespace Dre0Dru.GameInput
     }
 
     [Serializable]
-    public class ButtonState<T> : ButtonState
+    public class ButtonState<T> : ButtonState, IButtonState<T>
     {
         [SerializeField]
         private T _value;

@@ -7,98 +7,68 @@ namespace Dre0Dru.GameInput
         bool IsValid { get; }
     }
 
-    public abstract class ButtonStateFilter : IButtonStateFilter
+    public abstract class ButtonStateFilter<TButtonState> : IButtonStateFilter
+        where TButtonState : IButtonState
     {
-        private readonly ButtonState _button;
-
         public abstract bool IsValid { get; }
 
-        protected ButtonState Button => _button;
+        protected TButtonState ButtonState { get; }
 
-        protected ButtonStateFilter(ButtonState button)
+        protected ButtonStateFilter(TButtonState buttonState)
         {
-            _button = button;
+            ButtonState = buttonState;
         }
 
-        public static implicit operator bool(ButtonStateFilter buttonFilter)
+        public static implicit operator bool(ButtonStateFilter<TButtonState> buttonFilter)
         {
             return buttonFilter.IsValid;
         }
     }
 
-    public abstract class ButtonStateFilter<T> : IButtonStateFilter
+    public class ButtonStateDelegateFilter<TButtonState> : ButtonStateFilter<TButtonState>
+        where TButtonState : IButtonState
     {
-        private readonly ButtonState<T> _button;
+        private readonly Func<TButtonState, bool> _filterFunc;
 
-        public abstract bool IsValid { get; }
-
-        protected ButtonState<T> Button => _button;
-
-        protected ButtonStateFilter(ButtonState<T> button)
-        {
-            _button = button;
-        }
-
-        public static implicit operator bool(ButtonStateFilter<T> buttonFilter)
-        {
-            return buttonFilter.IsValid;
-        }
-    }
-
-    public class ButtonStateDelegateFilter : ButtonStateFilter
-    {
-        private readonly Func<ButtonState, bool> _filterFunc;
-
-        public ButtonStateDelegateFilter(ButtonState button, Func<ButtonState, bool> filterFunc) : base(button)
+        public ButtonStateDelegateFilter(TButtonState buttonState, Func<TButtonState, bool> filterFunc) : base(
+            buttonState)
         {
             _filterFunc = filterFunc;
         }
 
-        public override bool IsValid => _filterFunc(Button);
+        public override bool IsValid => _filterFunc(ButtonState);
     }
 
-    public class ButtonStateDelegateFilter<T> : ButtonStateFilter<T>
-    {
-        private readonly Func<ButtonState<T>, bool> _filterFunc;
-
-        public ButtonStateDelegateFilter(ButtonState<T> button, Func<ButtonState<T>, bool> filterFunc) : base(button)
-        {
-            _filterFunc = filterFunc;
-        }
-
-        public override bool IsValid => _filterFunc(Button);
-    }
-
-    public class ButtonStateHoldFilter : ButtonStateFilter
+    public class ButtonStateHoldFilter : ButtonStateFilter<IButtonState>
     {
         private readonly float _holdDurationSeconds;
 
-        public ButtonStateHoldFilter(ButtonState button, float holdDurationSeconds) : base(button)
+        public ButtonStateHoldFilter(IButtonState buttonState, float holdDurationSeconds) : base(buttonState)
         {
             _holdDurationSeconds = holdDurationSeconds;
         }
 
-        public override bool IsValid => Button.WasHeldFor(_holdDurationSeconds);
+        public override bool IsValid => ButtonState.WasHeldFor(_holdDurationSeconds);
     }
 
-    public class ButtonStateTapFilter : ButtonStateFilter
+    public class ButtonStateTapFilter : ButtonStateFilter<IButtonState>
     {
         private readonly float _tapDurationSeconds;
 
-        public ButtonStateTapFilter(ButtonState button, float tapDurationSeconds) : base(button)
+        public ButtonStateTapFilter(IButtonState buttonState, float tapDurationSeconds) : base(buttonState)
         {
             _tapDurationSeconds = tapDurationSeconds;
         }
 
-        public override bool IsValid => Button.WasTapped(_tapDurationSeconds);
+        public override bool IsValid => ButtonState.WasTapped(_tapDurationSeconds);
     }
 
-    public class ButtonStatePressFilter : ButtonStateFilter
+    public class ButtonStatePressFilter : ButtonStateFilter<IButtonState>
     {
-        public ButtonStatePressFilter(ButtonState button) : base(button)
+        public ButtonStatePressFilter(IButtonState buttonState) : base(buttonState)
         {
         }
 
-        public override bool IsValid => Button.IsPressed();
+        public override bool IsValid => ButtonState.IsPressed();
     }
 }

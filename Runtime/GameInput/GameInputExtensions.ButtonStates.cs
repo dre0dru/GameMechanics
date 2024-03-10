@@ -1,38 +1,37 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Dre0Dru.GameInput
 {
     public static partial class GameInputExtensions
     {
-        public static void UpdatePressedState(this ButtonState buttonState)
+        public static void UpdatePressedState(this IButtonState buttonState)
         {
             buttonState.PressFrame = Time.frameCount;
             buttonState.PressTime = Time.realtimeSinceStartup;
         }
         
-        public static void UpdateReleasedState(this ButtonState buttonState)
+        public static void UpdateReleasedState(this IButtonState buttonState)
         {
             buttonState.ReleaseFrame = Time.frameCount;
             buttonState.ReleaseTime = Time.realtimeSinceStartup;
         }
 
-        public static bool IsPressed(this ButtonState buttonState)
+        public static bool IsPressed(this IButtonState buttonState)
         {
             return buttonState.ReleaseFrame < buttonState.PressFrame;
         }
         
-        public static bool WasPressedThisFrame(this ButtonState buttonState)
+        public static bool WasPressedThisFrame(this IButtonState buttonState)
         {
             return buttonState.PressFrame == Time.frameCount;
         }
 
-        public static bool WasReleasedThisFrame(this ButtonState buttonState)
+        public static bool WasReleasedThisFrame(this IButtonState buttonState)
         {
             return buttonState.ReleaseFrame == Time.frameCount;
         }
 
-        public static float HoldTime(this ButtonState buttonState)
+        public static float HoldTime(this IButtonState buttonState)
         {
             if (buttonState.IsPressed())
             {
@@ -42,18 +41,18 @@ namespace Dre0Dru.GameInput
             return buttonState.ReleaseTime - buttonState.PressTime;
         }
 
-        public static bool WasHeldFor(this ButtonState buttonState, float seconds)
+        public static bool WasHeldFor(this IButtonState buttonState, float seconds)
         {
             return buttonState.HoldTime() >= seconds;
         }
 
-        public static bool WasTapped(this ButtonState buttonState, float tapDurationSeconds)
+        public static bool WasTapped(this IButtonState buttonState, float tapDurationSeconds)
         {
             return !buttonState.IsPressed() && !buttonState.WasHeldFor(tapDurationSeconds) &&
                    buttonState.WasPressedInLast(tapDurationSeconds);
         }
 
-        public static bool WasPressedInLast(this ButtonState buttonState, float seconds)
+        public static bool WasPressedInLast(this IButtonState buttonState, float seconds)
         {
             return Time.realtimeSinceStartup - buttonState.PressTime <= seconds;
         }

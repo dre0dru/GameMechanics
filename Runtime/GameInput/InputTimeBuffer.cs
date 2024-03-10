@@ -3,9 +3,26 @@ using UnityEngine;
 
 namespace Dre0Dru.GameInput
 {
-    //TODO replace with consumable pressed in last X seconds state filter?
+    public interface IInputTimeBuffer
+    {
+        float TimeOut { get; set; }
+        bool IsConsumed { get; }
+        float ValidUntilTime { get; }
+        void Buffer(float bufferedTime);
+        void Buffer(float bufferedTime, float timeOut);
+        bool CanBeConsumed(float time);
+        void Consume(float time);
+    }
+
+    public interface IInputTimeBuffer<T> : IInputTimeBuffer
+    {
+        T Value { get; }
+        void Buffer(T value, float bufferedTime);
+        void Buffer(T value, float bufferedTime, float timeOut);
+    }
+    
     [Serializable]
-    public class InputTimeBuffer
+    public class InputTimeBuffer : IInputTimeBuffer
     {
         [SerializeField]
         private float _timeOut;
@@ -15,6 +32,12 @@ namespace Dre0Dru.GameInput
 
         [SerializeField]
         private float _consumeTime = float.MinValue;
+
+        public float TimeOut
+        {
+            get => _timeOut;
+            set => _timeOut = value;
+        }
 
         public bool IsConsumed => _consumeTime >= _bufferedTime;
 
@@ -53,7 +76,7 @@ namespace Dre0Dru.GameInput
     }
 
     [Serializable]
-    public class InputTimeBuffer<T> : InputTimeBuffer
+    public class InputTimeBuffer<T> : InputTimeBuffer, IInputTimeBuffer<T>
     {
         [SerializeField]
         private T _value;
