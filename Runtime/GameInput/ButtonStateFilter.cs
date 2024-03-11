@@ -2,6 +2,8 @@ using System;
 
 namespace Dre0Dru.GameInput
 {
+    //TODO filter for which button state is passed instead of caching?
+    //IsValid(ButtonState)
     public interface IButtonStateFilter
     {
         bool IsValid { get; }
