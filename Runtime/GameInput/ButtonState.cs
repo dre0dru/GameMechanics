@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dre0Dru.GameInput
 {
+    //TODO make struct variant to keep in list/history w/o allocs?
     public interface IButtonState
     {
         float PressTime { get; set; }
