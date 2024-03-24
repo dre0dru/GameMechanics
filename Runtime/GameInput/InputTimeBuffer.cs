@@ -20,7 +20,7 @@ namespace Dre0Dru.GameInput
         void Buffer(T value, float bufferedTime);
         void Buffer(T value, float bufferedTime, float timeOut);
     }
-    
+
     [Serializable]
     public class InputTimeBuffer : IInputTimeBuffer
     {
@@ -43,11 +43,10 @@ namespace Dre0Dru.GameInput
 
         public float ValidUntilTime => _bufferedTime + _timeOut;
 
-        public InputTimeBuffer() : this(default)
+        public InputTimeBuffer() : this(0.5f)
         {
-            
         }
-        
+
         public InputTimeBuffer(float timeOut)
         {
             _timeOut = timeOut;
@@ -57,7 +56,7 @@ namespace Dre0Dru.GameInput
         {
             _bufferedTime = bufferedTime;
         }
-        
+
         public void Buffer(float bufferedTime, float timeOut)
         {
             _timeOut = timeOut;
@@ -86,11 +85,11 @@ namespace Dre0Dru.GameInput
         public InputTimeBuffer() : this(default, default)
         {
         }
-        
+
         public InputTimeBuffer(float timeout) : this(default, timeout)
         {
         }
-        
+
         public InputTimeBuffer(T value) : this(value, default)
         {
         }
@@ -99,13 +98,13 @@ namespace Dre0Dru.GameInput
         {
             _value = value;
         }
-        
+
         public void Buffer(T value, float bufferedTime)
         {
             _value = value;
             Buffer(bufferedTime);
         }
-        
+
         public void Buffer(T value, float bufferedTime, float timeOut)
         {
             _value = value;

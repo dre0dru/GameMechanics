@@ -25,25 +25,25 @@ namespace Dre0Dru.GameInput
         }
 
         public static void Buffer(this IInputTimeBuffer inputBuffer,
-            ButtonState buttonState)
+            IButtonState buttonState)
         {
             inputBuffer.Buffer(buttonState.PressTime);
         }
 
         public static void Buffer(this IInputTimeBuffer inputBuffer,
-            ButtonState buttonState, float timeOut)
+            IButtonState buttonState, float timeOut)
         {
             inputBuffer.Buffer(buttonState.PressTime, timeOut);
         }
 
         public static void Buffer<T>(this IInputTimeBuffer<T> inputBuffer,
-            ButtonState<T> buttonState)
+            IButtonState<T> buttonState)
         {
             inputBuffer.Buffer(buttonState.Value, buttonState.PressTime);
         }
 
         public static void Buffer<T>(this IInputTimeBuffer<T> inputBuffer,
-            ButtonState<T> buttonState, float timeOut)
+            IButtonState<T> buttonState, float timeOut)
         {
             inputBuffer.Buffer(buttonState.Value, buttonState.PressTime, timeOut);
         }
