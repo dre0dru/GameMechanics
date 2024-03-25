@@ -37,4 +37,32 @@ namespace Atomic.Elements
             return atomic.Value;
         }
     }
+
+    [Serializable]
+    public sealed class AtomicReadOnlyProperty<T> : IAtomicValue<T>
+    {
+        [ShowInInspector, DisableInEditorMode]
+        public T Value => _getter != null ? _getter.Invoke() : default;
+
+        private Func<T> _getter;
+
+        public AtomicReadOnlyProperty()
+        {
+        }
+
+        public AtomicReadOnlyProperty(Func<T> getter)
+        {
+            _getter = getter;
+        }
+
+        public void Compose(Func<T> getter)
+        {
+            _getter = getter;
+        }
+
+        public static implicit operator T(AtomicReadOnlyProperty<T> atomic)
+        {
+            return atomic.Value;
+        }
+    }
 }
