@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if INPUT_SYSTEM
+using System;
 using UnityEngine.InputSystem;
 
 namespace Dre0Dru.GameInput
@@ -50,3 +51,4 @@ namespace Dre0Dru.GameInput
         }
     }
 }
+#endif

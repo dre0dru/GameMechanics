@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Dre0Dru.GameInput
 {
     public static class Wasd
     {
+        #if INPUT_SYSTEM
         public static Vector2 GetInput2()
         {
             var result = Vector2.zero;
 
-            var kb = Keyboard.current;
+            var kb = UnityEngine.InputSystem.Keyboard.current;
 
             if (kb.wKey.isPressed)
             {
@@ -33,5 +33,6 @@ namespace Dre0Dru.GameInput
 
             return result;
         }
+        #endif
     }
 }

@@ -1,0 +1,24 @@
+{
+    "name": "Dre0Dru.GameplayFlags",
+    "rootNamespace": "Dre0Dru.GameplayFlags",
+    "references": [
+        "GUID:858f01292afdc66489a4648c01d9ca1e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DRE0DRU_COLLECTIONS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.dre0dru.collections",
+            "expression": "",
+            "define": "DRE0DRU_COLLECTIONS"
+        }
+    ],
+    "noEngineReferences": false
+}
