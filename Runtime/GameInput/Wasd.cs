@@ -33,6 +33,33 @@ namespace Dre0Dru.GameInput
 
             return result;
         }
+        #else
+        public static Vector2 GetInput2()
+        {
+            var result = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                result.y += 1;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                result.y -= 1;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                result.x += 1;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                result.x -= 1;
+            }
+
+            return result;
+        }
         #endif
     }
 }
