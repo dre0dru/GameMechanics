@@ -10,7 +10,15 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [
+        "SER_REF_SELECTOR"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.mackysoft.serializereference-extensions",
+            "expression": "",
+            "define": "SER_REF_SELECTOR"
+        }
+    ],
     "noEngineReferences": false
 }
