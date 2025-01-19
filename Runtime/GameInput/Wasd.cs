@@ -11,28 +11,36 @@ namespace Dre0Dru.GameInput
 
             var kb = UnityEngine.InputSystem.Keyboard.current;
 
-            if (kb.wKey.isPressed)
+            if (kb.wKey.isPressed || kb.upArrowKey.isPressed)
             {
                 result.y += 1;
             }
             
-            if (kb.sKey.isPressed)
+            if (kb.sKey.isPressed || kb.downArrowKey.isPressed)
             {
                 result.y -= 1;
             }
             
-            if (kb.dKey.isPressed)
+            if (kb.dKey.isPressed || kb.rightArrowKey.isPressed)
             {
                 result.x += 1;
             }
             
-            if (kb.aKey.isPressed)
+            if (kb.aKey.isPressed || kb.leftArrowKey.isPressed)
             {
                 result.x -= 1;
             }
 
             return result;
         }
+
+        public static Vector2 GetMouseInput2()
+        {
+            var mouse = UnityEngine.InputSystem.Mouse.current;
+
+            return mouse.delta.ReadValue();
+        }
+
         #else
         public static Vector2 GetInput2()
         {
