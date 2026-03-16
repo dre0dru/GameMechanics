@@ -68,6 +68,11 @@ namespace Dre0Dru.GameInput
 
             return result;
         }
+
+        public static Vector2 GetMouseInput2()
+        {
+            return new Vector2(Input.mousePositionDelta.x, Input.mousePositionDelta.y);
+        }
         #endif
     }
 }
